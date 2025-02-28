@@ -4,6 +4,13 @@ import numpy as np
 import json
 import os
 
+def check_file_exists(filepath):
+    if not os.path.isfile(filepath):
+        print(f"❌ Файл не найден: {filepath}")
+        return False
+    return True
+
+
 app = Flask(__name__)
 
 
@@ -94,6 +101,13 @@ def inverse_scale_output(scaled_val, scaler):
 
 # Функция загрузки TFLite модели
 def load_tflite_model(model_path):
+
+        model_file_path = category_to_model_file[category]
+    scaler_file_path = category_to_scaler_file[category]
+    
+    if not check_file_exists(model_file_path) or not check_file_exists(scaler_file_path):
+        return jsonify({"error": f"Файл модели или scaler не найден: {model_file_path} / {scaler_file_path}"}), 500
+
     interpreter = tf.lite.Interpreter(model_path=model_path)
     interpreter.allocate_tensors()
     return interpreter

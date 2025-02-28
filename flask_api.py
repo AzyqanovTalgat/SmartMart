@@ -102,7 +102,7 @@ def inverse_scale_output(scaled_val, scaler):
 # Функция загрузки TFLite модели
 def load_tflite_model(model_path):
 
-        model_file_path = category_to_model_file[category]
+    model_file_path = category_to_model_file[category]
     scaler_file_path = category_to_scaler_file[category]
     
     if not check_file_exists(model_file_path) or not check_file_exists(scaler_file_path):
